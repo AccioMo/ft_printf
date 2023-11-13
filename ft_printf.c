@@ -6,13 +6,13 @@
 /*   By: mzeggaf <mzeggaf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 22:23:59 by mzeggaf           #+#    #+#             */
-/*   Updated: 2023/11/13 15:13:05 by mzeggaf          ###   ########.fr       */
+/*   Updated: 2023/11/13 20:22:57 by mzeggaf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_strchr(const char *str, int c)
+static char	*ft_strchr(const char *str, int c)
 {
 	while (*str && *str != (char)c)
 		str++;
