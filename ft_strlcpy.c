@@ -1,45 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzeggaf <mzeggaf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 22:23:59 by mzeggaf           #+#    #+#             */
-/*   Updated: 2023/11/15 00:18:41 by mzeggaf          ###   ########.fr       */
+/*   Created: 2023/11/01 01:31:51 by mzeggaf           #+#    #+#             */
+/*   Updated: 2023/11/14 14:39:46 by mzeggaf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *str, ...)
+int	ft_strlcpy(char *dest, char *src, int size)
 {
-	int		len;
-	int		add;
-	va_list	args;
+	int	len;
 
-	len = 0;
-	va_start(args, str);
-	while (*str)
+	len = ft_strlen(src);
+	while (size > 1 && *src)
 	{
-		if (*str == '%')
-		{
-			str++;
-			add = ft_printf_multiverse((char **)&str, args);
-			if (add == -1)
-				return (-1);
-			len += add;
-			if (*str)
-				str++;
-		}
-		else
-		{
-			add = write(1, str++, 1);
-			if (add == -1)
-				return (-1);
-			len += add;
-		}
+		*dest = *src;
+		dest++;
+		src++;
+		size--;
 	}
-	va_end(args);
+	if (size)
+		*dest = '\0';
 	return (len);
 }

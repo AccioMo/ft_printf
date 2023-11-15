@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_duphex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzeggaf <mzeggaf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:33:18 by mzeggaf           #+#    #+#             */
-/*   Updated: 2023/11/13 18:13:05 by mzeggaf          ###   ########.fr       */
+/*   Updated: 2023/11/15 22:22:40 by mzeggaf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,40 +19,52 @@ static unsigned long	get_hexdigits(unsigned long n)
 	digits = 1;
 	while (n / 16)
 	{
-		digits *= 16;
+		digits += 1;
 		n /= 16;
 	}
 	return (digits);
 }
 
-int	ft_puthex(unsigned int nbr, const char *base)
+char	*ft_duphex(unsigned int nbr, const char *base)
 {
 	unsigned int	digits;
-	int				len;
+	char			*dup;
 
-	len = 0;
 	digits = get_hexdigits(nbr);
-	while (digits)
+	dup = (char *)malloc((digits + 1) * sizeof(char));
+	if (!dup)
+		return (NULL);
+	*dup = '0';
+	dup += digits;
+	*dup = '\0';
+	while (nbr)
 	{
-		len += ft_putchar(base[nbr / digits]);
-		nbr %= digits;
-		digits /= 16;
+		dup--;
+		*dup = base[nbr % 16];
+		nbr /= 16;
+		digits--;
 	}
-	return (len);
+	return (dup - digits);
 }
 
-int	ft_putaddr(unsigned long addr)
+char	*ft_dupaddr(unsigned long addr)
 {
 	unsigned long	digits;
-	int				len;
+	char			*dup;
 
-	len = ft_putstr("0x");
 	digits = get_hexdigits(addr);
-	while (digits)
+	dup = (char *)malloc((digits + 1) * sizeof(char));
+	if (!dup)
+		return (NULL);
+	*dup = '0';
+	dup += digits;
+	*dup = '\0';
+	while (addr)
 	{
-		len += ft_putchar(LOWER_HEX[addr / digits]);
-		addr %= digits;
-		digits /= 16;
+		dup--;
+		*dup = LOWER_HEX[addr % 16];
+		addr /= 16;
+		digits--;
 	}
-	return (len);
+	return (dup - digits);
 }

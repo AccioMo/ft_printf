@@ -1,45 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_printflags.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzeggaf <mzeggaf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 22:23:59 by mzeggaf           #+#    #+#             */
-/*   Updated: 2023/11/15 00:18:41 by mzeggaf          ###   ########.fr       */
+/*   Created: 2023/11/14 10:21:14 by mzeggaf           #+#    #+#             */
+/*   Updated: 2023/11/14 11:36:04 by mzeggaf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *str, ...)
+t_flag	*ft_addflag(char txt, int width)
 {
-	int		len;
-	int		add;
-	va_list	args;
+	t_flag	*flag;
+
+	flag = (t_flag *)malloc(sizeof(t_flag));
+	if (!flag)
+		return (NULL);
+	flag->txt = txt;
+	flag->width = width;
+	return (flag);
+}
+
+int	ft_printflags(t_flag *flag)
+{
+	int	len;
 
 	len = 0;
-	va_start(args, str);
-	while (*str)
+	while (flag->width)
 	{
-		if (*str == '%')
-		{
-			str++;
-			add = ft_printf_multiverse((char **)&str, args);
-			if (add == -1)
-				return (-1);
-			len += add;
-			if (*str)
-				str++;
-		}
-		else
-		{
-			add = write(1, str++, 1);
-			if (add == -1)
-				return (-1);
-			len += add;
-		}
+		write(1, &flag->txt, 1);
+		flag->width--;
 	}
-	va_end(args);
 	return (len);
 }

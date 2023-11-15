@@ -1,45 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzeggaf <mzeggaf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 22:23:59 by mzeggaf           #+#    #+#             */
-/*   Updated: 2023/11/15 00:18:41 by mzeggaf          ###   ########.fr       */
+/*   Created: 2023/11/03 01:00:58 by mzeggaf           #+#    #+#             */
+/*   Updated: 2023/11/14 14:45:18 by mzeggaf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *str, ...)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
-	int		len;
-	int		add;
-	va_list	args;
+	char	*substr;
+	size_t	s_len;
 
-	len = 0;
-	va_start(args, str);
-	while (*str)
-	{
-		if (*str == '%')
-		{
-			str++;
-			add = ft_printf_multiverse((char **)&str, args);
-			if (add == -1)
-				return (-1);
-			len += add;
-			if (*str)
-				str++;
-		}
-		else
-		{
-			add = write(1, str++, 1);
-			if (add == -1)
-				return (-1);
-			len += add;
-		}
-	}
-	va_end(args);
-	return (len);
+	if (!s)
+		return (NULL);
+	s_len = ft_strlen(s);
+	if (start < s_len && s_len - start < len)
+		len = s_len - start;
+	len *= s_len > start;
+	substr = (char *)malloc(len + 1);
+	if (!substr)
+		return (NULL);
+	substr[len] = '\0';
+	while (start-- && *s)
+		s++;
+	ft_strlcpy(substr, s, len + 1);
+	return (substr);
 }

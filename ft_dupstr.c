@@ -1,45 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_dupstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzeggaf <mzeggaf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 22:23:59 by mzeggaf           #+#    #+#             */
-/*   Updated: 2023/11/15 00:18:41 by mzeggaf          ###   ########.fr       */
+/*   Created: 2023/11/02 20:23:33 by mzeggaf           #+#    #+#             */
+/*   Updated: 2023/11/14 14:51:08 by mzeggaf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *str, ...)
+char	*ft_dupstr(char *s1)
 {
+	char	*ptr;
 	int		len;
-	int		add;
-	va_list	args;
 
-	len = 0;
-	va_start(args, str);
-	while (*str)
-	{
-		if (*str == '%')
-		{
-			str++;
-			add = ft_printf_multiverse((char **)&str, args);
-			if (add == -1)
-				return (-1);
-			len += add;
-			if (*str)
-				str++;
-		}
-		else
-		{
-			add = write(1, str++, 1);
-			if (add == -1)
-				return (-1);
-			len += add;
-		}
-	}
-	va_end(args);
-	return (len);
+	if (s1 == NULL)
+		s1 = "(null)";
+	len = ft_strlen(s1) + 1;
+	ptr = (char *)malloc(len);
+	if (!ptr)
+		return (NULL);
+	ft_strlcpy(ptr, s1, len);
+	return (ptr);
 }

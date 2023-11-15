@@ -1,45 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzeggaf <mzeggaf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 22:23:59 by mzeggaf           #+#    #+#             */
-/*   Updated: 2023/11/15 00:18:41 by mzeggaf          ###   ########.fr       */
+/*   Created: 2023/11/13 11:46:46 by mzeggaf           #+#    #+#             */
+/*   Updated: 2023/11/15 23:53:44 by mzeggaf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
+#include <limits.h>
 
-int	ft_printf(const char *str, ...)
+int	main(void)
 {
-	int		len;
-	int		add;
-	va_list	args;
+	int	a;
+	int	b;
+	char	*s;
+	
+	s = "hello";
+	a= printf(">------------<%12.4d>------------<", 1337); 
+	printf("\n"); 
+	b =ft_printf(">------------<%12.4d>------------<", 1337);
+	printf("\n"); 
+	printf("a: %d\nb: %d\n", a, b);
 
-	len = 0;
-	va_start(args, str);
-	while (*str)
-	{
-		if (*str == '%')
-		{
-			str++;
-			add = ft_printf_multiverse((char **)&str, args);
-			if (add == -1)
-				return (-1);
-			len += add;
-			if (*str)
-				str++;
-		}
-		else
-		{
-			add = write(1, str++, 1);
-			if (add == -1)
-				return (-1);
-			len += add;
-		}
-	}
-	va_end(args);
-	return (len);
+	return (0);
 }
