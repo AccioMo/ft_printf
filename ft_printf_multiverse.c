@@ -6,40 +6,29 @@
 /*   By: mzeggaf <mzeggaf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 22:32:32 by mzeggaf           #+#    #+#             */
-/*   Updated: 2023/11/15 00:23:48 by mzeggaf          ###   ########.fr       */
+/*   Updated: 2023/11/18 15:27:23 by mzeggaf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf_multiverse(char **to_print, va_list args)
+int	ft_printf_multiverse(char flag, va_list args)
 {
-	char	*flags;
-	char	*dup;
-
-	flags = ft_saveflags(to_print);
-	if (!flags)
-		return (-1);
-	if (**to_print == 'c')
-		dup = ft_dupchr(va_arg(args, int));
-	else if (**to_print == 's')
-		dup = ft_dupstr(va_arg(args, char *));
-	else if (**to_print == 'd' || **to_print == 'i')
-		dup = ft_dupnbr(va_arg(args, int));
-	else if (**to_print == 'u')
-		dup = ft_dupunbr(va_arg(args, unsigned int));
-	else if (**to_print == 'p')
-		dup = ft_dupaddr(va_arg(args, unsigned long));
-	else if (**to_print == 'x')
-		dup = ft_duphex(va_arg(args, unsigned int), LOWER_HEX);
-	else if (**to_print == 'X')
-		dup = ft_duphex(va_arg(args, unsigned int), UPPER_HEX);
-	else
-		dup = ft_dupchr(**to_print);
-	if (!dup)
-	{
-		free(flags);
-		return (-1);
-	}
-	return (ft_useflags(dup, flags, **to_print));
+	if (flag == '%')
+		return (ft_putchar('%'));
+	else if (flag == 'c')
+		return (ft_putchar(va_arg(args, int)));
+	else if (flag == 's')
+		return (ft_putstr(va_arg(args, char *)));
+	else if (flag == 'd' || flag == 'i')
+		return (ft_putnbr(va_arg(args, int)));
+	else if (flag == 'u')
+		return (ft_putunbr(va_arg(args, unsigned int)));
+	else if (flag == 'p')
+		return (ft_putaddr(va_arg(args, unsigned long)));
+	else if (flag == 'x')
+		return (ft_puthex(va_arg(args, unsigned int), LOWER_HEX));
+	else if (flag == 'X')
+		return (ft_puthex(va_arg(args, unsigned int), UPPER_HEX));
+	return (0);
 }

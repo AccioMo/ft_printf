@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnstr.c                                       :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzeggaf <mzeggaf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:04:17 by mzeggaf           #+#    #+#             */
-/*   Updated: 2023/11/15 00:06:45 by mzeggaf          ###   ########.fr       */
+/*   Updated: 2023/11/13 15:28:39 by mzeggaf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putnstr(char *str, int n)
+int	ft_putstr(char *str)
 {
 	int	len;
 
 	len = 0;
-	while (*str && n)
+	if (str == NULL)
+		return (write(1, "(null)", 6));
+	while (*str)
 	{
-		if (write(1, str, 1) == -1)
-			return (-1);
+		write(1, str, 1);
 		str++;
 		len++;
-		n--;
 	}
 	return (len);
 }
